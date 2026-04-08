@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ẩm Thực Hà Nội - Nhóm 5</title>
+    <meta name="description" content="Khám phá nền ẩm thực phong phú và đa dạng của Hà Nội - Phở, Bún chả, Chả cá, Bánh mì và nhiều hơn nữa.">
+    <meta name="author" content="Nhóm 5">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Ubuntu:wght@300;400;500;700&family=Lobster+Two:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: auto; }
+        body { font-family: 'Ubuntu', sans-serif; color: #333; }
+
+        /* =================== NAVBAR =================== */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(255,255,255,0.97); backdrop-filter: blur(12px);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 40px; transition: all 0.4s ease;
+        }
+        .navbar.scrolled { padding: 6px 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); }
+        .navbar-brand {
+            font-family: 'Lobster Two', cursive; font-size: 1.6rem; color: #d32f2f;
+            text-decoration: none; font-weight: 700; transition: transform 0.3s;
+        }
+        .navbar-brand:hover { transform: scale(1.05); }
+        .nav-links { display: flex; gap: 6px; list-style: none; }
+        .nav-links a {
+            text-decoration: none; color: #333; padding: 8px 16px;
+            border-radius: 20px; transition: all 0.3s; font-weight: 500; font-size: 0.95rem;
+            position: relative;
+        }
+        .nav-links a:hover, .nav-links a.active { background: #d32f2f; color: #fff; }
+        .hamburger { display: none; cursor: pointer; font-size: 1.5rem; background: none; border: none; color: #333; }
+        @media (max-width: 768px) {
+            .hamburger { display: block; }
+            .nav-links {
+                display: none; flex-direction: column; position: absolute;
+                top: 56px; left: 0; right: 0; background: rgba(255,255,255,0.98);
+                padding: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                backdrop-filter: blur(10px);
+            }
+            .nav-links.open { display: flex; }
+            .navbar { padding: 10px 20px; }
+        }
+
+        /* =================== HERO =================== */
+        .hero {
+            height: 100vh; background: url('images/794effcf813dd698019250b4e58599e2-1199x799.jpg') center/cover fixed;
+            display: flex; align-items: center; justify-content: center;
+            position: relative; text-align: center;
+        }
+        .hero::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(211,47,47,0.3) 100%);
+        }
+        .hero-content { position: relative; z-index: 1; color: #fff; max-width: 800px; padding: 0 20px; }
+        .hero-content h1 {
+            font-family: 'Dancing Script', cursive; font-size: 4.2rem;
+            margin-bottom: 20px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+            animation: fadeInDown 1s ease-out;
+        }
+        .hero-content p { font-size: 1.2rem; line-height: 1.8; opacity: 0.95; animation: fadeInUp 1s ease-out 0.3s both; }
+        .hero-scroll-hint {
+            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+            z-index: 1; color: #fff; font-size: 0.9rem; opacity: 0.8;
+            animation: bounce 2s infinite; cursor: pointer; text-align: center;
+        }
+        .hero-scroll-hint span { display: block; font-size: 1.5rem; margin-top: 4px; }
+        @keyframes fadeInDown { from { opacity:0; transform:translateY(-30px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes fadeInUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes bounce { 0%,20%,50%,80%,100% { transform:translateX(-50%) translateY(0); } 40% { transform:translateX(-50%) translateY(-12px); } 60% { transform:translateX(-50%) translateY(-6px); } }
+        @media (max-width: 768px) { .hero-content h1 { font-size: 2.5rem; } }
+
+        /* =================== SECTION COMMON =================== */
+        section { padding: 80px 20px; }
+        .section-title {
+            text-align: center; font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem; color: #d32f2f; margin-bottom: 16px;
+        }
+        .section-subtitle {
+            text-align: center; color: #888; font-size: 1rem; margin-bottom: 50px; max-width: 600px; margin-left: auto; margin-right: auto;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        /* Fade-in animation */
+        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        .fade-in-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .fade-in-left.visible { opacity: 1; transform: translateX(0); }
+        .fade-in-right { opacity: 0; transform: translateX(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .fade-in-right.visible { opacity: 1; transform: translateX(0); }
+
+        /* =================== GIỚI THIỆU =================== */
+        #gioi-thieu { background: linear-gradient(180deg, #fafafa 0%, #fff 100%); }
+        .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        @media (max-width: 768px) { .intro-grid { grid-template-columns: 1fr; } }
+        .intro-text {
+            font-size: 1.05rem; line-height: 2; color: #555;
+            border-left: 4px solid #d32f2f; padding-left: 20px;
+        }
+        .intro-image { border-radius: 16px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+        .intro-image img { width: 100%; height: 350px; object-fit: cover; display: block; transition: transform 0.5s; }
+        .intro-image:hover img { transform: scale(1.05); }
+
+        /* =================== MÓN ĂN =================== */
+        #mon-an { background: #fff; }
+        .food-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .food-card {
+            background: #fff; border-radius: 16px; overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06); transition: transform 0.4s ease, box-shadow 0.4s ease;
+            border: 1px solid #f0f0f0;
+        }
+        .food-card:hover { transform: translateY(-10px); box-shadow: 0 12px 40px rgba(211,47,47,0.15); }
+        .food-card img { width: 100%; height: 220px; object-fit: cover; transition: transform 0.5s; }
+        .food-card:hover img { transform: scale(1.08); }
+        .food-card .card-img { overflow: hidden; }
+        .food-card .card-body { padding: 20px; }
+        .food-card h3 { font-family: 'Lobster Two', cursive; font-size: 1.4rem; color: #d32f2f; margin-bottom: 10px; }
+        .food-card p { color: #666; line-height: 1.7; font-size: 0.95rem; }
+        .food-card .tag {
+            display: inline-block; background: #fdeaea; color: #d32f2f; padding: 3px 12px;
+            border-radius: 12px; font-size: 0.8rem; font-weight: 500; margin-top: 10px;
+        }
+
+        /* =================== QUÁN ĂN =================== */
+        #quan-an { background: linear-gradient(180deg, #fafafa 0%, #f5f5f5 100%); }
+        .restaurant-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
+        .restaurant-card {
+            background: #fff; border-radius: 16px; overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06); transition: transform 0.4s, box-shadow 0.4s;
+            cursor: pointer; border: 1px solid #f0f0f0;
+        }
+        .restaurant-card:hover { transform: translateY(-8px); box-shadow: 0 10px 35px rgba(211,47,47,0.12); }
+        .restaurant-card .card-img { overflow: hidden; }
+        .restaurant-card img { width: 100%; height: 260px; object-fit: cover; transition: transform 0.5s; }
+        .restaurant-card:hover img { transform: scale(1.06); }
+        .restaurant-card .card-body { padding: 16px; }
+        .restaurant-card h3 { font-family: 'Lobster Two', cursive; color: #333; font-size: 1.2rem; margin-bottom: 6px; }
+        .restaurant-card p { color: #777; font-size: 0.9rem; line-height: 1.6; }
+        .restaurant-card .btn-detail {
+            display: inline-block; margin-top: 10px; padding: 7px 18px;
+            background: linear-gradient(135deg, #d32f2f, #e53935); color: #fff; border-radius: 20px;
+            text-decoration: none; font-size: 0.85rem; transition: all 0.3s; font-weight: 500;
+        }
+        .restaurant-card .btn-detail:hover { background: linear-gradient(135deg, #b71c1c, #c62828); transform: translateX(3px); }
+
+        /* =================== MODAL =================== */
+        .modal-overlay {
+            display: none; position: fixed; inset: 0; z-index: 2000;
+            background: rgba(0,0,0,0.7); justify-content: center; align-items: center;
+            backdrop-filter: blur(4px);
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content {
+            background: #fff; border-radius: 20px; max-width: 900px; width: 90%;
+            max-height: 85vh; overflow-y: auto; padding: 36px; position: relative;
+            animation: modalIn 0.3s ease-out;
+        }
+        @keyframes modalIn { from { opacity:0; transform:scale(0.95) translateY(20px); } to { opacity:1; transform:scale(1) translateY(0); } }
+        .modal-close {
+            position: absolute; top: 15px; right: 20px; font-size: 1.8rem;
+            cursor: pointer; background: #f5f5f5; border: none; color: #999;
+            width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s;
+        }
+        .modal-close:hover { color: #fff; background: #d32f2f; }
+        .modal-content h2 { font-family: 'Dancing Script', cursive; color: #d32f2f; font-size: 2rem; margin-bottom: 16px; }
+        .modal-content p { line-height: 1.8; color: #555; margin-bottom: 12px; }
+        .modal-images { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 16px; }
+        .modal-images img { width: 100%; height: 180px; object-fit: cover; border-radius: 10px; transition: transform 0.3s; }
+        .modal-images img:hover { transform: scale(1.05); }
+
+        /* =================== VIDEO =================== */
+        #video { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; text-align: center; }
+        #video .section-title { color: #ff6b6b; }
+        #video .section-subtitle { color: rgba(255,255,255,0.6); }
+        #video p.video-desc { max-width: 700px; margin: 0 auto 30px; line-height: 1.8; opacity: 0.85; }
+        .video-wrapper {
+            max-width: 800px; margin: 0 auto; border-radius: 16px; overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.1);
+        }
+        .video-wrapper video { width: 100%; display: block; }
+
+        /* =================== LIÊN HỆ =================== */
+        #lien-he { background: linear-gradient(180deg, #fafafa 0%, #fff 100%); }
+        .contact-wrapper { max-width: 600px; margin: 0 auto; }
+        .contact-form { display: flex; flex-direction: column; gap: 14px; }
+        .contact-form input, .contact-form textarea {
+            padding: 14px 18px; border: 2px solid #e8e8e8; border-radius: 10px;
+            font-family: 'Ubuntu', sans-serif; font-size: 0.95rem; transition: all 0.3s;
+            background: #fafafa;
+        }
+        .contact-form input:focus, .contact-form textarea:focus { border-color: #d32f2f; outline: none; background: #fff; box-shadow: 0 0 0 4px rgba(211,47,47,0.08); }
+        .contact-form textarea { min-height: 120px; resize: vertical; }
+        .contact-form button {
+            padding: 14px 32px; background: linear-gradient(135deg, #d32f2f, #e53935); color: #fff; border: none;
+            border-radius: 25px; font-size: 1rem; cursor: pointer; transition: all 0.3s;
+            font-weight: 600; align-self: flex-start; box-shadow: 0 4px 15px rgba(211,47,47,0.3);
+        }
+        .contact-form button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(211,47,47,0.4); }
+        .contact-form button:active { transform: translateY(0); }
+
+        /* Messages */
+        .message-list { display: flex; flex-direction: column; gap: 16px; margin-top: 30px; }
+        .comment-item {
+            background: #fff; padding: 18px 22px; border-radius: 12px;
+            border-left: 4px solid #d32f2f; box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+            animation: slideIn 0.4s ease-out;
+        }
+        @keyframes slideIn { from { opacity:0; transform:translateY(-10px); } to { opacity:1; transform:translateY(0); } }
+        .comment-item .comment-author { font-weight: 700; color: #d32f2f; margin-bottom: 4px; }
+        .comment-item .comment-time { font-size: 0.8rem; color: #aaa; margin-bottom: 8px; }
+        .comment-item .comment-text { color: #555; line-height: 1.6; }
+
+        /* =================== FOOTER =================== */
+        footer {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #ccc; text-align: center;
+            padding: 50px 20px 30px;
+        }
+        .footer-brand {
+            font-family: 'Lobster Two', cursive; font-size: 1.8rem; color: #ff6b6b;
+            margin-bottom: 20px; display: block;
+        }
+        .footer-contact {
+            display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;
+            margin-bottom: 24px; font-size: 0.95rem;
+        }
+        .footer-contact span { display: flex; align-items: center; gap: 6px; }
+        .footer-links { margin-bottom: 20px; display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; }
+        .footer-links a {
+            color: #aaa; text-decoration: none; padding: 6px 14px; border-radius: 16px;
+            transition: all 0.3s; font-size: 0.9rem;
+        }
+        .footer-links a:hover { color: #fff; background: rgba(255,255,255,0.1); }
+        .footer-divider { width: 60px; height: 2px; background: #ff6b6b; margin: 20px auto; border-radius: 2px; }
+        footer p { font-size: 0.85rem; color: #888; }
+
+        /* =================== BACK TO TOP =================== */
+        .back-to-top {
+            position: fixed; bottom: 30px; right: 30px; z-index: 999;
+            width: 48px; height: 48px; border-radius: 50%;
+            background: linear-gradient(135deg, #d32f2f, #e53935); color: #fff;
+            border: none; font-size: 1.3rem; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(211,47,47,0.4);
+            opacity: 0; transform: translateY(20px);
+            transition: all 0.4s ease; display: flex; align-items: center; justify-content: center;
+        }
+        .back-to-top.show { opacity: 1; transform: translateY(0); }
+        .back-to-top:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(211,47,47,0.5); }
+
+        /* =================== STATS BAR =================== */
+        .stats-bar {
+            background: linear-gradient(135deg, #d32f2f, #e53935); color: #fff;
+            padding: 40px 20px; text-align: center;
+        }
+        .stats-grid { display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; max-width: 800px; margin: 0 auto; }
+        .stat-item h3 { font-size: 2.2rem; font-weight: 700; margin-bottom: 4px; }
+        .stat-item p { font-size: 0.9rem; opacity: 0.9; }
+
+        /* =================== LOADING =================== */
+        .page-loader {
+            position: fixed; inset: 0; z-index: 9999; background: #fff;
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.5s;
+        }
+        .page-loader.hide { opacity: 0; pointer-events: none; }
+        .loader-spinner {
+            width: 40px; height: 40px; border: 4px solid #f0f0f0;
+            border-top-color: #d32f2f; border-radius: 50%; animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div class="page-loader" id="pageLoader"><div class="loader-spinner"></div></div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="mainNav">
+    <a href="#trang-chu" class="navbar-brand">🍜 Ẩm Thực Hà Nội</a>
+    <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+    <div class="nav-links">
+        <a href="#trang-chu">Trang chủ</a>
+        <a href="#gioi-thieu">Giới thiệu</a>
+        <a href="#mon-an">Món ăn</a>
+        <a href="#quan-an">Quán ăn</a>
+        <a href="#video">Video</a>
+        <a href="#lien-he">Liên hệ</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="trang-chu">
+    <div class="hero-content">
+        <h1>Ẩm Thực Hà Nội</h1>
+        <p>Khám phá nền ẩm thực ngàn năm văn hiến, nơi mỗi món ăn là một câu chuyện<br>về lịch sử, văn hóa và tâm hồn người Hà Nội.</p>
+    </div>
+    <div class="hero-scroll-hint" onclick="document.querySelector('#gioi-thieu') && smoothScrollTo(document.querySelector('#gioi-thieu'))">
+        Khám phá ngay <span>▼</span>
+    </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar fade-in">
+    <div class="stats-grid">
+        <div class="stat-item"><h3>4+</h3><p>Món ăn đặc sắc</p></div>
+        <div class="stat-item"><h3>4+</h3><p>Quán ăn nổi tiếng</p></div>
+        <div class="stat-item"><h3>1000+</h3><p>Năm văn hóa ẩm thực</p></div>
+    </div>
+</div>
+
+<!-- GIỚI THIỆU -->
+<section id="gioi-thieu">
+    <h2 class="section-title fade-in">Giới Thiệu</h2>
+    <p class="section-subtitle fade-in">Hà Nội - Thủ đô ngàn năm văn hiến với nền ẩm thực phong phú</p>
+    <div class="container">
+        <div class="intro-grid">
+            <div class="intro-text fade-in-left">
+                Hà Nội không chỉ là trung tâm chính trị, văn hóa mà còn là <strong>thiên đường ẩm thực</strong> của Việt Nam. Từ những gánh hàng rong trên phố cổ đến các nhà hàng truyền thống lâu đời, mỗi góc phố đều mang một hương vị riêng biệt.<br><br>
+                Ẩm thực Hà Nội nổi bật với sự <strong>tinh tế trong chế biến</strong>, cầu kỳ trong trình bày và hài hòa trong hương vị. Những món ăn nơi đây không chỉ đơn thuần là thức ăn, mà còn là <strong>di sản văn hóa</strong> được truyền từ đời này sang đời khác.
+            </div>
+            <div class="intro-image fade-in-right">
+                <img src="images/vn-11134513-7r98o-lsvgnybrgzvdcdresize-ss1242x600crop-w1242-h600-ct.jpg" alt="Ẩm thực Hà Nội" loading="lazy">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MÓN ĂN -->
+<section id="mon-an">
+    <h2 class="section-title fade-in">Món Ăn Đặc Sắc</h2>
+    <p class="section-subtitle fade-in">Những tinh hoa ẩm thực làm nên thương hiệu Hà Nội</p>
+    <div class="container">
+        <div class="food-grid">
+            <div class="food-card fade-in">
+                <div class="card-img"><img src="images/pho-bo-ha-noi-7.webp" alt="Phở Hà Nội" loading="lazy"></div>
+                <div class="card-body">
+                    <h3>Phở Hà Nội</h3>
+                    <p>Phở là biểu tượng ẩm thực Việt Nam, với nước dùng trong veo, bánh phở mềm dai và thịt bò thơm ngon. Mỗi bát phở là sự kết hợp hoàn hảo giữa hương vị và nghệ thuật.</p>
+                    <span class="tag">🥇 Di sản ẩm thực</span>
+                </div>
+            </div>
+            <div class="food-card fade-in">
+                <div class="card-img"><img src="images/700-bun-cha-1-696x464.jpg" alt="Bún Chả Hà Nội" loading="lazy"></div>
+                <div class="card-body">
+                    <h3>Bún Chả</h3>
+                    <p>Bún chả với chả nướng thơm lừng trên than hoa, ăn kèm bún tươi và nước chấm đậm đà. Món ăn gắn liền với bữa trưa của người Hà Nội từ bao đời.</p>
+                    <span class="tag">🔥 Đặc sản đường phố</span>
+                </div>
+            </div>
+            <div class="food-card fade-in">
+                <div class="card-img"><img src="images/chaca-1200x895.jpg" alt="Chả Cá Lã Vọng" loading="lazy"></div>
+                <div class="card-body">
+                    <h3>Chả Cá Lã Vọng</h3>
+                    <p>Chả cá chiên giòn cùng nghệ và thì là, ăn kèm bún, rau thơm và mắm tôm. Món ăn hơn 100 năm tuổi, trở thành tên một con phố ở Hà Nội.</p>
+                    <span class="tag">📍 Phố Chả Cá</span>
+                </div>
+            </div>
+            <div class="food-card fade-in">
+                <div class="card-img"><img src="images/banh-mi-ha-noi-18-481x316.jpg" alt="Bánh Mì Hà Nội" loading="lazy"></div>
+                <div class="card-body">
+                    <h3>Bánh Mì Hà Nội</h3>
+                    <p>Bánh mì Hà Nội với lớp vỏ giòn rụm, nhân phong phú từ pate, chả, rau thơm tạo nên hương vị đặc trưng không nơi nào sánh được.</p>
+                    <span class="tag">🌍 Nổi tiếng thế giới</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- QUÁN ĂN -->
+<section id="quan-an">
+    <h2 class="section-title fade-in">Quán Ăn Nổi Tiếng</h2>
+    <p class="section-subtitle fade-in">Những địa chỉ ẩm thực không thể bỏ lỡ khi đến Hà Nội</p>
+    <div class="container">
+        <div class="restaurant-grid">
+            <div class="restaurant-card fade-in" onclick="openModal('pho')">
+                <div class="card-img"><img src="images/128c07feafceb251c83332315ef1da0d-736x736.jpeg" alt="Phở Gia Truyền" loading="lazy"></div>
+                <div class="card-body">
+                    <h3>Phở Gia Truyền Bát Đản</h3>
+                    <p>Quán phở lâu đời nổi tiếng bậc nhất Hà Nội, nằm tại phố Bát Đàn.</p>
+                    <span class="btn-detail">Tìm hiểu thêm →</span>
+                </div>
+            </div>
+            <div class="restaurant-card fade-in" onclick="openModal('buncha')">
+                <div class="card-img"><img src="images/90510-bun-cha-ha-noi-quan-quan-an-quan-12-700x465.jpg" alt="Bún Chả Hương Liên" loading="lazy"></div>
+                <div class="card-body">
+                    <h3>Bún Chả Hương Liên</h3>
+                    <p>Nổi danh với combo "Obama" sau chuyến thăm của cựu Tổng thống Mỹ.</p>
+                    <span class="btn-detail">Tìm hiểu thêm →</span>
+                </div>
+            </div>
+            <div class="restaurant-card fade-in" onclick="openModal('chaca')">
+                <div class="card-img"><img src="images/cclv-750x750.png" alt="Chả Cá Lã Vọng" loading="lazy"></div>
+                <div class="card-body">
+                    <h3>Chả Cá Lã Vọng</h3>
+                    <p>Nhà hàng trăm năm tuổi tại phố Chả Cá, biểu tượng ẩm thực Hà Nội.</p>
+                    <span class="btn-detail">Tìm hiểu thêm →</span>
+                </div>
+            </div>
+            <div class="restaurant-card fade-in" onclick="openModal('banhmi')">
+                <div class="card-img"><img src="images/vn-11134259-7r98o-lwh1ozdmymzd0eresize-w800.jpg" alt="Bánh Mì 25" loading="lazy"></div>
+                <div class="card-body">
+                    <h3>Bánh Mì 25</h3>
+                    <p>Quán bánh mì phố cổ nổi tiếng với du khách quốc tế.</p>
+                    <span class="btn-detail">Tìm hiểu thêm →</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="modal-pho">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModal('pho')">&times;</button>
+        <h2>Phở Gia Truyền Bát Đản</h2>
+        <p><strong>📍 Địa chỉ:</strong> 49 Bát Đàn, Cửa Đông, Hoàn Kiếm, Hà Nội</p>
+        <p><strong>⏰ Giờ mở cửa:</strong> 6:00 - 10:00 & 18:00 - 20:30</p>
+        <p>Phở Bát Đàn nằm ở phố Bát Đàn, quận Hoàn Kiếm, Hà Nội. Đây là quán phở rất nổi tiếng và luôn đông khách, đặc biệt vào buổi sáng. Quán phở có lịch sử hàng chục năm với hương vị đặc trưng không lẫn vào đâu được. Nước dùng trong veo, thơm nồng mùi xương ninh, bánh phở mềm mại.</p>
+        <div class="modal-images">
+            <img src="images/d0e1959811aa591d3f5f98963079d960-736x981.jpg" alt="Phở Bát Đàn" loading="lazy">
+            <img src="images/phogiatruyen11-736x491.jpg" alt="Phở Gia Truyền" loading="lazy">
+            <img src="images/pho-550x413.jpg" alt="Phở" loading="lazy">
+        </div>
+    </div>
+</div>
+<div class="modal-overlay" id="modal-buncha">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModal('buncha')">&times;</button>
+        <h2>Bún Chả Hương Liên</h2>
+        <p><strong>📍 CƠ SỞ 1:</strong> 24 Lê Văn Hưu, Phan Chu Trinh, Hai Bà Trưng, Hà Nội</p>
+        <p><strong>📍 CƠ SỞ 2:</strong> 14 ngõ 59 Láng Hạ, Đống Đa, Hà Nội</p>
+        <p><strong>⏰ Giờ mở cửa:</strong> 10:00 - 21:00</p>
+        <p>Bún chả Hương Liên nổi tiếng toàn cầu sau khi cựu Tổng thống Obama ghé thăm năm 2016. Quán giữ nguyên hương vị truyền thống với chả nướng thơm lừng trên bếp than và nước chấm pha chế theo công thức riêng.</p>
+        <div class="modal-images">
+            <img src="images/chi-nhanh-1-1738663793-600x413.jpg" alt="Bún chả Hương Liên" loading="lazy">
+            <img src="images/a07d335f58114c3c856afbaea73668aa.webp" alt="Bún chả" loading="lazy">
+            <img src="images/quan-bun-cha-dong-hop-kinh-cho-ngoi-ai-cung-ngo-ngang-khi-biet-su-that-img-1854-1520697572-275-width660height495-600x450.jpg" alt="Quán bún chả" loading="lazy">
+        </div>
+    </div>
+</div>
+<div class="modal-overlay" id="modal-chaca">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModal('chaca')">&times;</button>
+        <h2>Chả Cá Lã Vọng</h2>
+        <p><strong>📍 Địa chỉ:</strong> 14 Chả Cá, Hàng Đào, Hoàn Kiếm, Hà Nội</p>
+        <p><strong>⏰ Giờ mở cửa:</strong> 10:00 - 22:00</p>
+        <p>Một trong những quán ăn lâu đời và nổi tiếng nhất tại Hà Nội, chuyên phục vụ món chả cá – đặc sản truyền thống hơn 100 năm. Chả cá được chiên cùng nghệ tươi, thì là, hành lá trên chảo nóng ngay tại bàn ăn.</p>
+        <div class="modal-images">
+            <img src="images/screenshot20623-1366x768.png" alt="Chả cá Lã Vọng" loading="lazy">
+            <img src="images/hanoifriedfishwithturmericanddillchacalavong.webp" alt="Chả cá" loading="lazy">
+            <img src="images/cha-ca-la-vong-nguyentruong-680x468.jpg" alt="Chả cá Lã Vọng" loading="lazy">
+        </div>
+    </div>
+</div>
+<div class="modal-overlay" id="modal-banhmi">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModal('banhmi')">&times;</button>
+        <h2>Bánh Mì 25</h2>
+        <p><strong>📍 Địa chỉ:</strong> 25 Hàng Cá, Hàng Đào, Hoàn Kiếm, Hà Nội</p>
+        <p><strong>⏰ Giờ mở cửa:</strong> 7:00 - 23:00</p>
+        <p>Bánh mì 25 là quán bánh mì nổi tiếng ở khu phố cổ Hà Nội, được nhiều du khách trong và ngoài nước yêu thích nhờ hương vị đặc biệt và giá cả phải chăng. Quán luôn nằm trong top các quán ăn đường phố được đánh giá cao nhất trên TripAdvisor.</p>
+        <div class="modal-images">
+            <img src="images/vn-11134259-7r98o-lw8blzy9e86361resize-ss800x450.jpg" alt="Bánh mì 25" loading="lazy">
+            <img src="images/screenshot20624-864x486.png" alt="Bánh mì" loading="lazy">
+        </div>
+    </div>
+</div>
+
+<!-- VIDEO -->
+<section id="video">
+    <h2 class="section-title fade-in">Ẩm Thực Đường Phố Hà Nội</h2>
+    <p class="section-subtitle fade-in">Video giới thiệu về văn hóa ẩm thực đường phố Hà Nội</p>
+    <div class="container">
+        <p class="video-desc fade-in">Ẩm thực Hà Nội được ví như "ngôi sao đang lên" trên bản đồ ẩm thực thế giới khi liên tiếp xuất hiện trên các bảng xếp hạng uy tín quốc tế.</p>
+        <div class="video-wrapper fade-in">
+            <video controls poster="images/video-placeholder.jpg" preload="metadata">
+                <source src="videos/nhom5.mp4" type="video/mp4">
+                Trình duyệt của bạn không hỗ trợ video.
+            </video>
+        </div>
+    </div>
+</section>
+
+<!-- LIÊN HỆ -->
+<section id="lien-he">
+    <h2 class="section-title fade-in">Liên Hệ Với Chúng Tôi</h2>
+    <p class="section-subtitle fade-in">Gửi tin nhắn cho chúng tôi để chia sẻ trải nghiệm ẩm thực của bạn</p>
+    <div class="container">
+        <div class="contact-wrapper">
+            <form class="contact-form fade-in" id="contactForm" onsubmit="sendMessage(event)">
+                <input type="text" id="contactName" placeholder="Họ và tên *" required>
+                <input type="email" id="contactEmail" placeholder="Email *" required>
+                <input type="text" id="contactSubject" placeholder="Tiêu đề">
+                <textarea id="contactMessage" placeholder="Nội dung tin nhắn... *" required></textarea>
+                <button type="submit">✉ Gửi tin nhắn</button>
+            </form>
+            <div class="message-list" id="messageList"></div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <span class="footer-brand">🍜 Ẩm Thực Hà Nội</span>
+    <div class="footer-contact">
+        <span>📍 Hà Nội, Việt Nam</span>
+        <span>📧 nhom5@example.com</span>
+        <span>📱 0123 456 789</span>
+    </div>
+    <div class="footer-links">
+        <a href="#trang-chu">Trang chủ</a>
+        <a href="#gioi-thieu">Giới thiệu</a>
+        <a href="#mon-an">Món ăn</a>
+        <a href="#quan-an">Quán ăn</a>
+        <a href="#video">Video</a>
+        <a href="#lien-he">Liên hệ</a>
+    </div>
+    <div class="footer-divider"></div>
+    <div style="margin-bottom:16px;text-align:center;">
+        <p style="font-size:0.95rem;color:#ccc;margin-bottom:8px;font-weight:600;">👥 Thành viên Nhóm 5</p>
+        <p style="font-size:0.85rem;color:#aaa;line-height:1.8;">Khúc Dương Phương Linh · Trương Hà My · Phạm Công Thành<br>Nguyễn Bảo Lam · Đỗ Quỳnh Liên · Nguyễn Đăng Dương · Vũ Gia Huy</p>
+    </div>
+    <p>© 2026 Ẩm Thực Hà Nội - Nhóm 5. All rights reserved.</p>
+</footer>
+
+<!-- BACK TO TOP -->
+<button class="back-to-top" id="backToTop" onclick="smoothScrollTo(document.getElementById('trang-chu'))">↑</button>
+
+<script>
+// Page loader
+window.addEventListener('load', () => {
+    setTimeout(() => document.getElementById('pageLoader').classList.add('hide'), 500);
+});
+
+// Custom smooth scroll with easing
+function smoothScrollTo(targetEl) {
+    const startY = window.scrollY;
+    const targetY = targetEl.getBoundingClientRect().top + window.scrollY - 70;
+    const distance = targetY - startY;
+    const duration = Math.min(1200, Math.max(600, Math.abs(distance) * 0.5));
+    let startTime = null;
+    function easeInOutCubic(t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+    function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const elapsed = timestamp - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        window.scrollTo(0, startY + distance * easeInOutCubic(progress));
+        if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+}
+
+// Smooth scroll for all anchor links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+            smoothScrollTo(target);
+            document.querySelector('.nav-links').classList.remove('open');
+        }
+    });
+});
+
+// Navbar scroll effects & active state
+window.addEventListener('scroll', () => {
+    const nav = document.getElementById('mainNav');
+    const backBtn = document.getElementById('backToTop');
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+    backBtn.classList.toggle('show', window.scrollY > 400);
+
+    const sections = document.querySelectorAll('section[id]');
+    let current = '';
+    sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    document.querySelectorAll('.nav-links a').forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+});
+
+// Intersection observer for animations
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el => observer.observe(el));
+
+// Modal
+function openModal(id) {
+    document.getElementById('modal-' + id).classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+    document.getElementById('modal-' + id).classList.remove('active');
+    document.body.style.overflow = '';
+}
+document.querySelectorAll('.modal-overlay').forEach(m => {
+    m.addEventListener('click', e => {
+        if (e.target === m) { m.classList.remove('active'); document.body.style.overflow = ''; }
+    });
+});
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.active').forEach(m => {
+            m.classList.remove('active'); document.body.style.overflow = '';
+        });
+    }
+});
+
+// Send message
+function sendMessage(e) {
+    e.preventDefault();
+    const name = document.getElementById('contactName').value.trim();
+    const email = document.getElementById('contactEmail').value.trim();
+    const subject = document.getElementById('contactSubject').value.trim();
+    const message = document.getElementById('contactMessage').value.trim();
+    if (!name || !email || !message) return;
+    const now = new Date();
+    const time = now.toLocaleDateString('vi-VN') + ' lúc ' + now.toLocaleTimeString('vi-VN', {hour:'2-digit', minute:'2-digit'});
+    const item = document.createElement('div');
+    item.className = 'comment-item';
+    item.innerHTML = `<div class="comment-author">${name} <span style="font-weight:400;color:#aaa;font-size:0.85rem">· ${email}</span></div><div class="comment-time">${time}${subject ? ' · ' + subject : ''}</div><div class="comment-text">${message}</div>`;
+    document.getElementById('messageList').prepend(item);
+    document.getElementById('contactForm').reset();
+}
+</script>
+</body>
+</html>
