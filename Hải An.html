@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hướng nghiệp CNTT — UET</title>
+  <meta name="description" content="Web hướng nghiệp CNTT theo nội dung docx: Trường ĐH Công nghệ (UET), ngành Kỹ thuật Phần mềm, ứng dụng CNTT trong Giao thông vận tải và phần tự đánh giá." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f6f8fc;
+      --surface:#ffffff;
+      --surface-2:#eef2ff;
+      --text:#101828;
+      --muted:#667085;
+      --line:#e5e7ef;
+      --shadow:0 18px 50px rgba(16,24,40,.10);
+      --radius:22px;
+      --blue:#2845d7;
+      --indigo:#4338ca;
+      --cyan:#0891b2;
+      --green:#15803d;
+      --orange:#ea580c;
+      --pink:#db2777;
+      --gold:#eab308;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:'Inter', sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(67,56,202,.07), transparent 30%),
+        radial-gradient(circle at top right, rgba(8,145,178,.08), transparent 24%),
+        var(--bg);
+      color:var(--text);
+      line-height:1.65;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+    img{max-width:100%; display:block}
+    a{color:inherit; text-decoration:none}
+    p{margin:0}
+    h1,h2,h3,h4{margin:0; line-height:1.15}
+    ul{margin:0; padding-left:1.1rem}
+    li{margin:.35rem 0}
+
+    .container{width:min(1140px, calc(100% - 2rem)); margin:0 auto}
+    .page-top{position:fixed; inset:0 auto auto 0; width:0; height:4px; z-index:9999; background:linear-gradient(90deg, var(--pink), var(--gold), var(--cyan)); box-shadow:0 0 22px rgba(234,179,8,.45)}
+
+    .navbar{
+      position:sticky; top:0; z-index:1000;
+      backdrop-filter:blur(18px);
+      background:rgba(255,255,255,.82);
+      border-bottom:1px solid rgba(229,231,239,.9);
+    }
+    .nav-inner{
+      width:min(1140px, calc(100% - 2rem)); margin:0 auto;
+      display:flex; align-items:center; justify-content:space-between; gap:1rem;
+      padding:.95rem 0;
+    }
+    .brand{display:flex; align-items:center; gap:.8rem; font-weight:900; letter-spacing:.01em}
+    .brand-mark{
+      width:42px; height:42px; border-radius:14px; display:grid; place-items:center;
+      color:#fff; background:linear-gradient(135deg, var(--indigo), var(--blue));
+      box-shadow:0 12px 26px rgba(67,56,202,.28);
+      flex:none;
+    }
+    .brand small{display:block; color:var(--muted); font-weight:700; font-size:.78rem; margin-top:.08rem}
+
+    .nav-links{display:flex; align-items:center; gap:.35rem; list-style:none; padding:0; margin:0; flex-wrap:wrap; justify-content:flex-end}
+    .nav-links a{
+      display:inline-flex; align-items:center; gap:.35rem;
+      padding:.72rem 1rem; border-radius:999px; font-weight:700; font-size:.92rem;
+      color:#344054; transition:.22s ease;
+    }
+    .nav-links a:hover{background:rgba(67,56,202,.08); color:var(--indigo); transform:translateY(-1px)}
+    .nav-links a.active{background:linear-gradient(135deg, var(--indigo), var(--blue)); color:#fff; box-shadow:0 10px 20px rgba(40,69,215,.18)}
+    .nav-toggle{display:none; border:none; background:transparent; width:44px; height:44px; border-radius:12px; cursor:pointer}
+    .nav-toggle svg{width:24px; height:24px; stroke:#344054}
+
+    .hero{
+      position:relative;
+      min-height:calc(100vh - 78px);
+      display:flex; align-items:center;
+      overflow:hidden;
+      color:#fff;
+      isolation:isolate;
+    }
+    .hero .bg{
+      position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+      transform:scale(1.03);
+      filter:saturate(1.08) contrast(1.02);
+      z-index:-2;
+    }
+    .hero::after{
+      content:""; position:absolute; inset:0; z-index:-1;
+      background:
+        linear-gradient(135deg, rgba(16,24,40,.82), rgba(40,69,215,.70) 55%, rgba(8,145,178,.40)),
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.16), transparent 18%),
+        radial-gradient(circle at 90% 10%, rgba(255,255,255,.12), transparent 18%);
+    }
+    .hero-shell{padding:4.5rem 0 5rem; width:100%}
+    .hero-card{
+      width:min(760px, 100%);
+      padding:2rem;
+      border-radius:28px;
+      background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow:0 30px 80px rgba(2,6,23,.28);
+      backdrop-filter:blur(16px);
+    }
+    .eyebrow{
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.45rem .85rem; border-radius:999px;
+      background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.16);
+      font-size:.8rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase;
+    }
+    .hero h1{
+      margin-top:1rem;
+      font-size:clamp(2.6rem, 7vw, 5rem);
+      font-weight:900;
+      letter-spacing:-.03em;
+      text-shadow:0 10px 30px rgba(0,0,0,.25);
+    }
+    .hero h1 .accent{
+      background:linear-gradient(135deg, #fff, #fde68a, #f0abfc);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+    .hero p{
+      margin-top:1rem; max-width:60ch; font-size:1.05rem; color:rgba(255,255,255,.88)
+    }
+    .hero-actions{display:flex; flex-wrap:wrap; gap:.85rem; margin-top:1.6rem}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+      padding:.95rem 1.2rem; border:none; border-radius:999px; cursor:pointer;
+      font:inherit; font-weight:800; letter-spacing:.01em;
+      transition:.22s ease;
+    }
+    .btn-primary{
+      background:linear-gradient(135deg, #f8fafc, #e2e8f0);
+      color:#0f172a;
+      box-shadow:0 14px 30px rgba(255,255,255,.16);
+    }
+    .btn-primary:hover{transform:translateY(-2px) scale(1.01)}
+    .btn-ghost{
+      background:rgba(255,255,255,.12); color:#fff; border:1px solid rgba(255,255,255,.18)
+    }
+    .btn-ghost:hover{background:rgba(255,255,255,.18); transform:translateY(-2px)}
+    .hero-source{margin-top:1rem; font-size:.88rem; color:rgba(255,255,255,.85)}
+    .hero-source a{color:#fff; text-decoration:underline; text-underline-offset:2px}
+
+    .stats{
+      margin-top:-2.4rem;
+      position:relative; z-index:2;
+      display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:1rem;
+    }
+    .stat{
+      background:rgba(255,255,255,.88);
+      border:1px solid rgba(229,231,239,.9);
+      border-radius:22px; padding:1rem 1.1rem;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(10px);
+    }
+    .stat .num{font-size:1.55rem; font-weight:900; color:var(--indigo)}
+    .stat .label{font-size:.88rem; color:var(--muted); margin-top:.15rem}
+
+    section.block{padding:4.6rem 0; scroll-margin-top:88px}
+    section.block.alt{background:linear-gradient(180deg, rgba(255,255,255,.78), rgba(238,242,255,.55)); border-top:1px solid rgba(229,231,239,.7); border-bottom:1px solid rgba(229,231,239,.7)}
+
+    .title-wrap{
+      position:relative;
+      overflow:hidden;
+      padding:1.1rem 1.2rem 1.15rem;
+      border-radius:24px;
+      margin-bottom:1.5rem;
+      box-shadow:0 16px 36px rgba(16,24,40,.10);
+      border:1px solid rgba(255,255,255,.18);
+    }
+    .title-wrap::before{
+      content:attr(data-watermark);
+      position:absolute; inset:auto 1rem -.65rem auto;
+      font-size:clamp(3rem, 10vw, 6rem);
+      font-weight:900; letter-spacing:.05em;
+      color:rgba(255,255,255,.14);
+      line-height:1;
+      pointer-events:none;
+      user-select:none;
+    }
+    .title-wrap h2{
+      position:relative; z-index:1;
+      font-size:clamp(1.55rem, 3vw, 2.15rem);
+      font-weight:900;
+      color:#fff;
+      text-shadow:0 8px 25px rgba(0,0,0,.18);
+    }
+    .title-wrap p{position:relative; z-index:1; margin-top:.35rem; color:rgba(255,255,255,.88); max-width:68ch}
+    .title-uet{background:linear-gradient(135deg, #283593, #1e88e5 65%, #00acc1)}
+    .title-se{background:linear-gradient(135deg, #7c3aed, #db2777 60%, #f97316)}
+    .title-gtvt{background:linear-gradient(135deg, #0f766e, #15803d 60%, #84cc16)}
+    .title-report{background:linear-gradient(135deg, #b45309, #ea580c 60%, #ef4444)}
+
+    .grid{display:grid; gap:1.2rem}
+    .grid-2{grid-template-columns:repeat(2, minmax(0, 1fr))}
+    .grid-3{grid-template-columns:repeat(3, minmax(0, 1fr))}
+    .grid-4{grid-template-columns:repeat(4, minmax(0, 1fr))}
+
+    .card,
+    .media{
+      background:rgba(255,255,255,.92);
+      border:1px solid var(--line);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .card{padding:1.25rem}
+    .card h3{
+      font-size:1.08rem; font-weight:900; margin-bottom:.6rem;
+      color:#22324d;
+    }
+    .card p,
+    .card li{color:#5f687c}
+    .card ul{margin-top:.35rem}
+
+    .media img{width:100%; aspect-ratio:16/9; object-fit:cover}
+    .media figcaption{
+      padding:1rem 1rem 1.05rem;
+      background:linear-gradient(180deg, rgba(248,250,252,1), rgba(241,245,249,1));
+      border-top:1px solid var(--line);
+      font-size:.9rem;
+      color:var(--muted);
+    }
+    .media figcaption a{color:var(--blue); text-decoration:underline; text-underline-offset:2px}
+    .inline-badge{
+      display:inline-flex; align-items:center; gap:.35rem;
+      padding:.35rem .65rem; border-radius:999px; font-size:.75rem; font-weight:800;
+      background:rgba(40,69,215,.09); color:var(--indigo)
+    }
+
+    .split{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:1.25rem;
+      align-items:start;
+    }
+    .accent-line{
+      width:94px; height:5px; border-radius:999px; margin:.95rem 0 0;
+      background:linear-gradient(90deg, var(--pink), var(--gold), var(--cyan));
+    }
+    .subhead{color:var(--muted); margin-top:.85rem}
+
+    .mini-cards{display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:1rem; margin-top:1rem}
+    .mini{padding:1rem; border-radius:18px; background:linear-gradient(180deg, #fff, #f8fafc); border:1px solid var(--line)}
+    .mini strong{display:block; color:#1d2a4a; margin-bottom:.35rem}
+    .mini span{color:var(--muted); font-size:.92rem}
+
+    .chart-box{
+      margin-top:1.2rem;
+      padding:1.25rem;
+      border-radius:24px;
+      background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(248,250,252,.96));
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+    }
+    .chart-box h3{font-size:1.08rem; margin-bottom:.4rem}
+    .chart-box .chart-sub{color:var(--muted); font-size:.92rem; margin-bottom:1rem}
+    .chart-wrap{overflow-x:auto}
+    .bars{display:grid; gap:1rem; max-width:100%}
+    .bar-row{display:grid; grid-template-columns:74px minmax(0,1fr) 62px; gap:.8rem; align-items:center}
+    .bar-label{font-weight:800; color:#344054}
+    .bar-track{
+      height:22px; background:#e8eef8; border-radius:999px; overflow:hidden; position:relative;
+      box-shadow:inset 0 1px 2px rgba(0,0,0,.05);
+    }
+    .bar-fill{
+      height:100%;
+      border-radius:999px;
+      background:linear-gradient(90deg, var(--indigo), var(--blue), var(--cyan));
+      box-shadow:0 8px 20px rgba(40,69,215,.18);
+      position:relative;
+    }
+    .bar-fill::after{
+      content:"";
+      position:absolute; inset:0 0 0 auto;
+      width:42px;
+      background:linear-gradient(90deg, rgba(255,255,255,.22), rgba(255,255,255,0));
+    }
+    .bar-score{
+      font-weight:900; text-align:right; color:#1d2a4a;
+    }
+    .chart-legend{
+      display:flex; flex-wrap:wrap; gap:.75rem; margin-top:1rem; color:var(--muted); font-size:.9rem
+    }
+    .chart-pill{display:inline-flex; align-items:center; gap:.4rem; padding:.45rem .7rem; border-radius:999px; background:#f1f5f9; border:1px solid var(--line)}
+    .dot{width:10px; height:10px; border-radius:999px; display:inline-block}
+    .dot-1{background:var(--indigo)}
+    .dot-2{background:var(--cyan)}
+
+    .footer{
+      margin-top:2rem;
+      padding:3rem 0 2rem;
+      background:linear-gradient(135deg, #0f172a, #1e293b 55%, #111827);
+      color:#fff;
+    }
+    .footer-grid{display:grid; grid-template-columns:1.2fr .9fr .9fr; gap:1.5rem}
+    .footer h3{font-size:1.05rem; margin-bottom:.8rem; color:#fff}
+    .footer p,.footer li{color:rgba(255,255,255,.76)}
+    .footer a{color:#fff; text-decoration:underline; text-underline-offset:2px}
+    .footer .note{margin-top:1.5rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,.12); font-size:.88rem; color:rgba(255,255,255,.72)}
+
+    .reveal{opacity:0; transform:translateY(18px); transition:.65s ease}
+    .reveal.show{opacity:1; transform:none}
+
+    @media (max-width: 980px){
+      .stats{grid-template-columns:repeat(2, minmax(0, 1fr))}
+      .split,.footer-grid,.grid-3,.grid-4{grid-template-columns:1fr}
+    }
+    @media (max-width: 760px){
+      .nav-toggle{display:inline-grid; place-items:center}
+      .nav-inner{flex-wrap:wrap}
+      .nav-links{display:none; width:100%; justify-content:flex-start; padding-top:.35rem}
+      .nav-links.open{display:flex}
+      .hero{min-height:auto}
+      .hero-shell{padding:3.5rem 0 4rem}
+      .hero-card{padding:1.35rem; border-radius:22px}
+      .stats{margin-top:1rem}
+      .mini-cards{grid-template-columns:1fr}
+      .bar-row{grid-template-columns:64px minmax(0,1fr) 56px}
+    }
+  </style>
+</head>
+<body>
+  <div class="page-top" id="pageTop"></div>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a class="brand" href="#top" aria-label="Trang chủ">
+        <span class="brand-mark">IT</span>
+        <span>
+          Hướng nghiệp CNTT
+          <small>UET • Kỹ thuật phần mềm • GTVT</small>
+        </span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Mở menu">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <path d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a class="active" href="#top">Trang chủ</a></li>
+        <li><a href="#uet">UET</a></li>
+        <li><a href="#se">Kỹ thuật phần mềm</a></li>
+        <li><a href="#gtvt">GTVT</a></li>
+        <li><a href="#report">Tự đánh giá</a></li>
+        <li><a href="#contact">Liên hệ</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header id="top" class="hero">
+    <img class="bg" src="https://uet.vnu.edu.vn/wp-content/uploads/2026/02/banner-1.jpg" alt="Banner chính thức của Trường Đại học Công nghệ - ĐHQGHN">
+    <div class="container hero-shell">
+      <div class="hero-card reveal">
+        <span class="eyebrow">NHIỆM VỤ TIN HỌC • LỰA CHỌN A4 + B2</span>
+        <h1>Hướng Nghiệp <span class="accent">CNTT</span></h1>
+        <p>Khám phá Trường Đại học Công nghệ (UET), ngành Kỹ thuật Phần mềm và ứng dụng CNTT trong Giao thông vận tải qua một giao diện hiện đại, sinh động, đúng nội dung bài làm.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#uet">Xem nội dung</a>
+          <a class="btn btn-ghost" href="#report">Phần tự đánh giá</a>
+        </div>
+        <p class="hero-source">Ảnh nền: <a href="https://uet.vnu.edu.vn/" target="_blank" rel="noreferrer">Trang chủ chính thức UET</a>.</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="stats">
+      <div class="stat reveal"><div class="num">UET</div><div class="label">Cơ sở đào tạo đề xuất</div></div>
+      <div class="stat reveal"><div class="num">SE</div><div class="label">Ngành Kỹ thuật Phần mềm</div></div>
+      <div class="stat reveal"><div class="num">GTVT</div><div class="label">Ngành có nhiều ứng dụng CNTT</div></div>
+      <div class="stat reveal"><div class="num">2025–2030</div><div class="label">Nhu cầu nhân lực tăng mạnh</div></div>
+    </div>
+  </div>
+
+  <section id="uet" class="block">
+    <div class="container">
+      <div class="title-wrap title-uet" data-watermark="UET">
+        <h2>1. Tìm hiểu thông tin tuyển sinh — Trường Đại học Công nghệ (UET)</h2>
+        <p>Cơ sở đào tạo đề xuất: Trường Đại học Công nghệ (UET) – Đại học Quốc gia Hà Nội.</p>
+        <div class="accent-line"></div>
+      </div>
+
+      <div class="split">
+        <div class="grid" style="gap:1rem">
+          <div class="card reveal">
+            <span class="inline-badge">1. Giới thiệu khái quát về cơ sở đào tạo</span>
+            <h3 style="margin-top:.85rem">Vài nét về lịch sử</h3>
+            <p>Tiền thân là Khoa Công nghệ thuộc Đại học Quốc gia Hà Nội được thành lập năm 1999. Đến năm 2004, Trường Đại học Công nghệ (University of Engineering and Technology - UET) chính thức được thành lập, trở thành một trong những trường đại học kỹ thuật công nghệ trọng điểm của cả nước.</p>
+          </div>
+          <div class="card reveal">
+            <h3>Thông tin cập nhật về tình hình hiện tại</h3>
+            <p>Trường hiện là đơn vị dẫn đầu trong hệ thống Đại học Quốc gia về nghiên cứu và đào tạo công nghệ chất lượng cao. UET sở hữu các phòng thí nghiệm trọng điểm về công nghệ mạng, robot, và hệ thống nhúng, đồng thời duy trì quan hệ đối tác chiến lược với các tập đoàn công nghệ hàng đầu thế giới như Samsung, Toshiba, và Google.</p>
+          </div>
+          <div class="card reveal">
+            <h3>Những nét riêng đáng chú ý</h3>
+            <p>Điểm nổi bật nhất của UET là mô hình đào tạo kết hợp chặt chẽ giữa <strong>Học tập - Nghiên cứu - Thực tiễn</strong>. Sinh viên thường xuyên giành giải cao tại các kỳ thi quốc tế như ICPC hay các cuộc thi sáng tạo Robot. Trường cũng chú trọng đào tạo theo chuẩn quốc tế với nhiều chương trình đạt kiểm định AUN-QA (Mạng lưới các trường đại học Đông Nam Á).</p>
+          </div>
+        </div>
+
+        <figure class="media reveal">
+          <img src="https://uet.vnu.edu.vn/wp-content/uploads/2026/01/Rectangle-5657-4.png" alt="Hình minh họa đổi mới sáng tạo của UET">
+          <figcaption>
+            Ảnh minh họa đổi mới sáng tạo. Nguồn: <a href="https://uet.vnu.edu.vn/" target="_blank" rel="noreferrer">uet.vnu.edu.vn</a>.
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:1.2rem">
+        <div class="card reveal">
+          <h3>2. Giới thiệu khái quát về lĩnh vực đào tạo “Máy tính và Công nghệ thông tin”</h3>
+          <p>Lĩnh vực này tại UET bao gồm các ngành mũi nhọn như Khoa học Máy tính, Kỹ thuật Máy tính, Mạng máy tính và Truyền thông dữ liệu, Hệ thống thông tin, và đặc biệt là Công nghệ Nông nghiệp kỹ thuật cao. Chương trình học được thiết kế linh hoạt, cập nhật liên tục theo xu hướng của cuộc Cách mạng Công nghiệp 4.0.</p>
+        </div>
+        <div class="card reveal">
+          <h3>Những gì sinh viên có thể hình dung từ lĩnh vực này</h3>
+          <div class="mini-cards">
+            <div class="mini"><strong>Khoa học Máy tính</strong><span>Nền tảng thuật toán, AI, dữ liệu.</span></div>
+            <div class="mini"><strong>Kỹ thuật Máy tính</strong><span>Phần cứng, hệ nhúng, IoT.</span></div>
+            <div class="mini"><strong>Mạng & Truyền thông</strong><span>Hạ tầng số, kết nối, an toàn.</span></div>
+            <div class="mini"><strong>Hệ thống thông tin</strong><span>Dữ liệu, phần mềm, nghiệp vụ.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <figure class="media reveal" style="margin-top:1.2rem">
+        <img src="https://uet.vnu.edu.vn/wp-content/uploads/2026/04/IMG_7004.jpg" alt="Hình ảnh sự kiện học thuật tại UET">
+        <figcaption>
+          Ảnh sự kiện học thuật tại UET. Nguồn: <a href="https://uet.vnu.edu.vn/" target="_blank" rel="noreferrer">uet.vnu.edu.vn</a>.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="se" class="block alt">
+    <div class="container">
+      <div class="title-wrap title-se" data-watermark="SE">
+        <h2>2. Giới thiệu chi tiết ngành Kỹ thuật Phần mềm</h2>
+        <p>Thông tin tuyển sinh, kiến thức, kỹ năng, cơ hội việc làm và nhà tuyển dụng tiềm năng.</p>
+        <div class="accent-line"></div>
+      </div>
+
+      <div class="split">
+        <figure class="media reveal">
+          <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1200&q=80" alt="Lập trình viên đang làm việc trên máy tính">
+          <figcaption>
+            Ảnh minh họa lập trình. Nguồn: <a href="https://unsplash.com/" target="_blank" rel="noreferrer">Unsplash</a>.
+          </figcaption>
+        </figure>
+
+        <div class="grid" style="gap:1rem">
+          <div class="card reveal">
+            <span class="inline-badge">Thông tin tuyển sinh</span>
+            <p style="margin-top:.8rem"><strong>Tổ hợp xét tuyển:</strong> A00 (Toán, Lý, Hóa), A01 (Toán, Lý, Anh).</p>
+            <p style="margin-top:.5rem"><strong>Điểm trúng tuyển:</strong> Đây là ngành luôn có sức hút cực lớn với điểm chuẩn thuộc top đầu. Năm 2023 và 2024, điểm trúng tuyển thường dao động từ 26,85 đến 27,5 điểm (theo thang điểm 30). Ngoài ra, trường còn xét tuyển dựa trên kết quả thi Đánh giá năng lực của ĐHQGHN.</p>
+          </div>
+          <div class="grid grid-2">
+            <div class="card reveal">
+              <h3>Kiến thức và kỹ năng nghề nghiệp</h3>
+              <p><strong>Kiến thức:</strong> Sinh viên được trang bị từ nền tảng lập trình cơ bản đến nâng cao, kiến trúc phần mềm, quy trình sản xuất phần mềm theo tiêu chuẩn quốc tế, bảo mật dữ liệu và kiểm thử phần mềm.</p>
+              <p style="margin-top:.6rem"><strong>Kỹ năng:</strong> Chú trọng khả năng tư duy giải quyết vấn đề, kỹ năng làm việc nhóm trong môi trường Agile/Scrum, và năng lực ngoại ngữ chuyên ngành để có thể làm việc trực tiếp với khách hàng quốc tế.</p>
+            </div>
+            <div class="card reveal">
+              <h3>Cơ hội việc làm và nhà tuyển dụng tiềm năng</h3>
+              <p><strong>Việc làm:</strong> Lập trình viên (Developer), Chuyên gia phân tích hệ thống (System Analyst), Quản trị dự án phần mềm (Project Manager), Kỹ sư cầu nối (BrSE).</p>
+              <p style="margin-top:.6rem"><strong>Nhà tuyển dụng:</strong> Các tập đoàn lớn như FPT Software, Viettel, Samsung R&D, VNG, cùng các công ty công nghệ đa quốc gia có trụ sở tại Việt Nam.</p>
+            </div>
+          </div>
+          <div class="card reveal">
+            <h3>Nhu cầu nhân lực</h3>
+            <p>Trong kỷ nguyên chuyển đổi số, nhu cầu kỹ sư phần mềm chất lượng cao tại Việt Nam đang tăng trưởng mạnh mẽ, dự báo thiếu hụt hàng chục nghìn nhân sự mỗi năm trong giai đoạn 2025-2030.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-box reveal">
+        <h3>Infographic điểm chuẩn ngành Kỹ thuật Phần mềm</h3>
+        <p class="chart-sub">Theo số liệu tổng hợp trong file docx, điểm chuẩn của ngành dao động từ 26,85 đến 27,5 điểm trong hai năm 2023–2024. Biểu đồ dưới đây thể hiện xu hướng tăng nhẹ.</p>
+        <div class="chart-wrap">
+          <div class="bars">
+            <div class="bar-row">
+              <div class="bar-label">2023</div>
+              <div class="bar-track"><div class="bar-fill" style="width:97.5%"></div></div>
+              <div class="bar-score">26,85</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">2024</div>
+              <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+              <div class="bar-score">27,50</div>
+            </div>
+          </div>
+        </div>
+        <div class="chart-legend">
+          <span class="chart-pill"><span class="dot dot-1"></span> Điểm chuẩn theo năm</span>
+          <span class="chart-pill"><span class="dot dot-2"></span> Xu hướng tăng nhẹ</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="gtvt" class="block">
+    <div class="container">
+      <div class="title-wrap title-gtvt" data-watermark="GTVT">
+        <h2>3. Tìm hiểu ngành có nhiều ứng dụng CNTT — Ngành Giao thông vận tải (GTVT)</h2>
+        <p>Lựa chọn B2: GTVT. Phần này làm rõ cách công nghệ thông tin đang thay đổi ngành giao thông hiện đại.</p>
+        <div class="accent-line"></div>
+      </div>
+
+      <div class="grid grid-2" style="align-items:start">
+        <div class="grid" style="gap:1rem">
+          <div class="card reveal">
+            <h3>1. Giới thiệu khái quát về công việc chính của ngành Giao thông vận tải</h3>
+            <p><strong>Vài nét về lịch sử:</strong> Ngành GTVT vốn dựa trên hạ tầng vật lý và điều khiển thủ công. Tuy nhiên, sự bùng nổ của Internet và cảm biến đã biến ngành này thành một “hệ sinh thái số” phức tạp.</p>
+            <p style="margin-top:.6rem"><strong>Thông tin cập nhật về tình hình hiện tại:</strong> Tại Việt Nam, GTVT đang là ngành tiên phong trong chuyển đổi số với các dự án trọng điểm như: Hệ thống quản lý bay hiện đại, cảng biển thông minh (Smart Port) và đặc biệt là sự phổ cập của hệ thống thu phí tự động không dừng (ETC) trên toàn quốc.</p>
+          </div>
+          <div class="card reveal">
+            <h3>Những việc có ứng dụng công nghệ thông tin</h3>
+            <ul>
+              <li><strong>Quản lý hạ tầng thông minh:</strong> Sử dụng cảm biến IoT để giám sát độ bền của cầu đường và hầm xuyên núi.</li>
+              <li><strong>Hệ thống giám sát hành trình:</strong> Tích hợp GPS và bản đồ số để quản lý hơn 1 triệu xe kinh doanh vận tải tại Việt Nam.</li>
+              <li><strong>Điều hành giao thông đô thị:</strong> Sử dụng Camera AI để nhận diện biển số, xử lý vi phạm (phạt nguội) và điều tiết đèn tín hiệu theo mật độ xe thực tế.</li>
+            </ul>
+          </div>
+          <div class="card reveal">
+            <h3>2. Một số công việc chính của chuyên viên CNTT trong ngành</h3>
+            <p>Các chuyên viên CNTT trong ngành GTVT không chỉ ngồi văn phòng mà thường phải làm việc trực tiếp với các hệ thống điều hành thực địa.</p>
+          </div>
+        </div>
+
+        <figure class="media reveal">
+          <img src="https://images.unsplash.com/photo-1493238792000-8113da705763?auto=format&fit=crop&w=1200&q=80" alt="Đường giao thông đô thị">
+          <figcaption>
+            Ảnh minh họa hạ tầng giao thông đô thị. Nguồn: <a href="https://unsplash.com/" target="_blank" rel="noreferrer">Unsplash</a>.
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="grid grid-3" style="margin-top:1.2rem">
+        <div class="card reveal">
+          <h3>Chuyên gia Phát triển Hệ thống Giao thông Thông minh (ITS)</h3>
+          <p>Thiết kế các thuật toán tối ưu hóa dòng chảy giao thông để giảm thiểu ùn tắc. Xây dựng hệ thống bảng điện tử (VMS) thông báo tình trạng đường xá thời gian thực cho tài xế.</p>
+        </div>
+        <div class="card reveal">
+          <h3>Kỹ sư Hệ thống Nhúng và IoT Giao thông</h3>
+          <p>Lập trình và lắp đặt các thiết bị cảm biến trên đường cao tốc để thu thập dữ liệu về tốc độ, lưu lượng và tải trọng xe. Phát triển các thiết bị tự động hóa trong kho bãi và cảng biển (như cẩu tự động, xe tự hành AGV).</p>
+        </div>
+        <div class="card reveal">
+          <h3>Chuyên viên Phân tích Dữ liệu và Trí tuệ Nhân tạo (AI)</h3>
+          <p>Xây dựng mô hình dự báo nhu cầu đi lại của người dân để sắp xếp lộ trình xe buýt hoặc tàu điện linh hoạt. Ứng dụng học máy để nhận diện các hành vi lái xe nguy hiểm, giúp giảm thiểu tai nạn giao thông.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:1.2rem">
+        <div class="card reveal">
+          <h3>3. Kiến thức, kỹ năng nghề nghiệp cần có</h3>
+          <ul>
+            <li><strong>Kiến thức chuyên sâu:</strong> Nắm vững các giao thức truyền tin không dây (5G, DSRC) để phương tiện có thể “nói chuyện” với hạ tầng.</li>
+            <li>Am hiểu về Hệ thống Thông tin Địa lý (GIS) và bản đồ số chuyên dụng cho ngành vận tải.</li>
+            <li><strong>Kỹ năng thực chiến:</strong> Khả năng xử lý dữ liệu lớn (Big Data) từ hàng triệu phương tiện gửi về cùng lúc.</li>
+            <li>Kỹ năng lập trình hệ thống thời gian thực (Real-time systems) yêu cầu độ trễ cực thấp.</li>
+            <li><strong>Phẩm chất đặc thù:</strong> Tư duy logic mạch lạc, khả năng chịu áp lực khi vận hành các hệ thống ảnh hưởng trực tiếp đến an toàn mạng sống con người.</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <h3>4. Cơ hội việc làm và nhu cầu nhân lực</h3>
+          <p><strong>Nhu cầu:</strong> Việt Nam đang đẩy mạnh xây dựng các “Thành phố thông minh”, dẫn đến sự khan hiếm nghiêm trọng các kỹ sư CNTT am hiểu nghiệp vụ giao thông.</p>
+          <p style="margin-top:.6rem"><strong>Nơi làm việc:</strong> Các tập đoàn công nghệ cung cấp giải pháp GTVT như FPT IS, Viettel Solutions, Elcom; các đơn vị quản lý như Trung tâm điều hành đường cao tốc, Tổng công ty Cảng hàng không Việt Nam (ACV), hoặc các công ty khởi nghiệp về LogiTech và AutoTech.</p>
+          <p style="margin-top:.6rem"><strong>Đãi ngộ:</strong> Đây là lĩnh vực đặc thù nên mức lương thường cao hơn mặt bằng chung, đi kèm với nhiều cơ hội tu nghiệp tại các quốc gia có nền giao thông phát triển như Nhật Bản hoặc Singapore.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="report" class="block alt">
+    <div class="container">
+      <div class="title-wrap title-report" data-watermark="REPORT">
+        <h2>4. Phần tự đánh giá kết quả thực hiện nhiệm vụ</h2>
+        <p>Đánh giá những việc đã hoàn thành, thiếu sót, tinh thần hợp tác và lợi ích thu được sau dự án nhỏ này.</p>
+        <div class="accent-line"></div>
+      </div>
+
+      <div class="split">
+        <div class="grid" style="gap:1rem">
+          <div class="card reveal">
+            <h3>1. Những việc đã hoàn thành</h3>
+            <p><strong>Thu thập và tổng hợp khối lượng thông tin lớn:</strong> Nhóm đã hoàn thành việc tìm kiếm và chọn lọc dữ liệu cập nhật cho giai đoạn 2025-2026 từ website chính thức của Trường ĐH Công nghệ (UET) và các báo cáo chuyên ngành về Giao thông vận tải.</p>
+            <p style="margin-top:.6rem"><strong>Hoàn thành các nhiệm vụ nghiên cứu trọng tâm:</strong> Nhiệm vụ 1 hoàn thành báo cáo chi tiết về Trường ĐH Công nghệ (UET), phân tích sâu ngành Kỹ thuật Phần mềm với đầy đủ dữ liệu về tổ hợp xét tuyển, điểm chuẩn và kiến thức trang bị. Nhiệm vụ 2 phân tích thực trạng ứng dụng CNTT trong ngành Giao thông vận tải, xác định các vị trí công việc then chốt như chuyên viên ITS và nhu cầu nhân lực thực tế.</p>
+            <p style="margin-top:.6rem"><strong>Hình thức trình bày:</strong> Thiết kế bài trình bày chuyên nghiệp, sử dụng các hình ảnh minh họa về hệ thống giao thông thông minh và sơ đồ đào tạo để người xem dễ nắm bắt.</p>
+            <p style="margin-top:.6rem"><strong>Phân tích chuyên sâu:</strong> Nhóm đã kết nối được sự tương quan giữa chương trình học tại trường đại học và các bài toán thực tế mà ngành GTVT đang cần giải quyết bằng công nghệ.</p>
+          </div>
+          <div class="card reveal">
+            <h3>2. Những thiếu sót</h3>
+            <p><strong>Hạn chế về tiếp cận thực tế:</strong> Do thời gian thực hiện chỉ có 2 tuần, nhóm chưa thể thực hiện phỏng vấn trực tiếp các chuyên gia CNTT tại các trung tâm điều hành giao thông mà chủ yếu dựa trên tài liệu trực tuyến.</p>
+            <p style="margin-top:.6rem"><strong>Mức độ chi tiết:</strong> Thông tin về mức lương khởi điểm của chuyên viên CNTT trong ngành GTVT chưa có nhiều khảo sát rộng rãi, chủ yếu là con số tham khảo từ các công ty Logistics lớn.</p>
+          </div>
+          <div class="card reveal">
+            <h3>3. Tinh thần làm việc và hợp tác</h3>
+            <p><strong>Trách nhiệm và chuyên nghiệp:</strong> Nhóm làm việc với tinh thần nghiêm túc, bám sát các giai đoạn thực hiện dự án theo đúng hướng dẫn của giáo viên.</p>
+            <p style="margin-top:.6rem"><strong>Phân công khoa học:</strong> Công việc được chia nhỏ cho 5 thành viên dựa trên sở trường (tìm kiếm, tổng hợp, thiết kế, thuyết trình) giúp tối ưu hóa thời gian.</p>
+            <p style="margin-top:.6rem"><strong>Tương tác nhóm tích cực:</strong> Các buổi thảo luận trên lớp và trực tuyến diễn ra sôi nổi, mọi ý kiến đều được lắng nghe và thống nhất để đạt kết quả tốt nhất.</p>
+          </div>
+          <div class="card reveal">
+            <h3>4. Lợi ích thu được qua dự án nhỏ này</h3>
+            <p><strong>Định hướng nghề nghiệp:</strong> Giúp các thành viên nhận ra tiềm năng cực lớn của CNTT trong các ngành nghề truyền thống như Giao thông vận tải, từ đó mở rộng lựa chọn nghề nghiệp.</p>
+            <p style="margin-top:.6rem"><strong>Phát triển kỹ năng:</strong> Cải thiện kỹ năng chọn lọc thông tin đáng tin cậy và kỹ năng trình bày báo cáo dự án một cách khoa học.</p>
+            <p style="margin-top:.6rem"><strong>Nhận thức về kỷ nguyên số:</strong> Hiểu rõ rằng việc học CNTT không chỉ là lập trình mà còn là giải quyết các vấn đề vĩ mô của xã hội như ùn tắc giao thông hay an toàn vận tải.</p>
+            <p style="margin-top:.6rem"><strong>Tăng cường sự tự tin:</strong> Hành trình tìm hiểu giúp nhóm tự tin hơn với các lựa chọn nguyện vọng đại học trong tương lai gần.</p>
+          </div>
+        </div>
+
+        <figure class="media reveal">
+          <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80" alt="Nhóm người đang làm việc và thảo luận">
+          <figcaption>
+            Ảnh minh họa làm việc nhóm. Nguồn: <a href="https://unsplash.com/" target="_blank" rel="noreferrer">Unsplash</a>.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact" class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h3>Liên hệ</h3>
+          <p>Giao diện web được xây dựng theo nội dung từ file docx, giữ phong cách hiện đại, dễ đọc và có trích nguồn rõ ràng cho từng hình ảnh.</p>
+        </div>
+        <div>
+          <h3>Thông tin UET</h3>
+          <ul>
+            <li>Điện thoại: <a href="tel:02437547468">086 200 8453</a></li>
+            <li>Email: <a href="mailto:uet@vnu.edu.vn">haian@gmail.com</a></li>
+            <li>Website: <a href="https://uet.vnu.edu.vn/" target="_blank" rel="noreferrer">uet.vnu.edu.vn</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Nguồn ảnh chính</h3>
+          <ul>
+            <li>UET Official Website</li>
+            <li>Unsplash</li>
+            <li>Wikimedia Commons</li>
+          </ul>
+        </div>
+      </div>
+      <div class="note">© Bài trình bày học tập — thiết kế một trang hoàn chỉnh, font Inter, tiêu đề nổi bật, hình ảnh có nguồn đi kèm.</div>
+    </div>
+  </footer>
+
+  <script>
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    const links = Array.from(navLinks.querySelectorAll('a'));
+    const reveals = Array.from(document.querySelectorAll('.reveal'));
+    const progress = document.getElementById('pageTop');
+
+    navToggle?.addEventListener('click', () => navLinks.classList.toggle('open'));
+    links.forEach(link => link.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    const activeByHash = () => {
+      const hash = location.hash || '#top';
+      links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === hash));
+    };
+    window.addEventListener('hashchange', activeByHash);
+    activeByHash();
+
+    window.addEventListener('scroll', () => {
+      const doc = document.documentElement;
+      const scrolled = (doc.scrollTop / (doc.scrollHeight - doc.clientHeight)) * 100;
+      progress.style.width = `${scrolled}%`;
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('show');
+      });
+    }, { threshold: 0.15 });
+
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
